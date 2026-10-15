@@ -27,7 +27,7 @@ export function Developers() {
         <div className="resource-grid">
           <ResourceCard
             title="Start with the fundamentals"
-            to="https://www.kamailio.org/wikidocs/"
+            to="/docs/collections/wiki"
             icon={Terminal}
           >
             Installation guides, configuration cookbooks, tutorials, and
@@ -35,7 +35,7 @@ export function Developers() {
           </ResourceCard>
           <ResourceCard
             title="Explore the modules"
-            to="https://www.kamailio.org/docs/modules/stable/"
+            to="/docs/modules/6.1.x"
             icon={Code2}
           >
             The complete module reference for the current stable branch.
@@ -43,7 +43,7 @@ export function Developers() {
           </ResourceCard>
           <ResourceCard
             title="Follow development"
-            to="https://www.kamailio.org/docs/modules/devel/"
+            to="/docs/modules/devel"
             icon={GitBranch}
           >
             Documentation for the development branch. Discover what’s being
@@ -68,7 +68,7 @@ export function Developers() {
               "02",
               "Configure your server",
               "Explore the configuration language, parameters, and cookbooks.",
-              "https://www.kamailio.org/wikidocs/",
+              "/docs/collections/wiki",
             ],
             [
               "03",

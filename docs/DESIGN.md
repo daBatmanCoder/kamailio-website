@@ -20,11 +20,11 @@ Mobbin’s public site and displayed screen examples were reviewed. No access to
 ## Content architecture
 
 1. Platform: capabilities and the complete feature reference
-2. Developers: onboarding, stable/development module docs, cookbooks, source, contribution
+2. Documentation: local module manuals, versioned wiki/cookbooks, tutorials, APIs, database schemas, legacy references, conference materials, and source coverage
 3. Community: mailing lists, Matrix, events, commercial support, donation and contact
 4. About: history, governance, and users
 5. Resources: full directory and every imported page
 6. News: searchable/filterable full archive
 7. Download: current release, source, package instructions, and upgrades
 
-The source archive preserves technical details and historic announcements. New presentation pages summarize and reorganize them. External documentation stays at its authoritative versioned URLs.
+The source archive preserves technical details and historic announcements. New presentation pages summarize and reorganize them. The documentation hub extends the dark signal-network identity with orbital code imagery, large editorial typography, and a searchable modular library. Technical readers use a light surface, readable typography, a persistent topic sidebar, and a searchable outline. Dark code panels preserve formatting and offer copy actions. Mobile navigation and outlines open on demand. Original source and release attribution remain visible throughout.

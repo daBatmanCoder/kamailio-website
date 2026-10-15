@@ -1,5 +1,5 @@
 import { siteHref } from "./lib/urls";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import {
   Link,
   NavLink,
@@ -29,6 +29,25 @@ import { NotFound } from "./pages/NotFound";
 import { Mark, clean } from "./components/UI";
 import { resourceGroups } from "./data/navigation";
 import content from "./data/content.json";
+const DocsHome = lazy(() => import("./pages/docs/DocsHome"));
+const DocsLibrary = lazy(() => import("./pages/docs/DocsLibrary"));
+const DocReader = lazy(() => import("./pages/docs/DocReader"));
+const DocsSources = lazy(() =>
+  import("./pages/docs/DocsSources").then((m) => ({ default: m.DocsSources })),
+);
+const DocsPresentations = lazy(() =>
+  import("./pages/docs/DocsSources").then((m) => ({
+    default: m.DocsPresentations,
+  })),
+);
+import {
+  loadDocumentation,
+  findDocs,
+  docSearchURL,
+  kinds,
+  versionLabel,
+  type DocRecord,
+} from "./lib/documentation";
 function Header() {
   const [menu, setMenu] = useState(false),
     [q, setQ] = useState("");
@@ -40,7 +59,11 @@ function Header() {
     setMenu(false);
     dialog.current?.close();
   }, [location]);
+  const [docs, setDocs] = useState<DocRecord[]>([]);
   function openSearch() {
+    loadDocumentation()
+      .then((data) => setDocs(data.catalog))
+      .catch(() => {});
     dialog.current?.showModal();
     requestAnimationFrame(() => input.current?.focus());
   }
@@ -76,6 +99,7 @@ function Header() {
           "management",
         ].includes(x.slug),
       );
+  const docResults = findDocs(docs, q, 8);
   return (
     <>
       <header className="site-header">
@@ -86,7 +110,7 @@ function Header() {
         <nav aria-label="Primary navigation" className={menu ? "is-open" : ""}>
           {[
             ["Platform", "/platform"],
-            ["Developers", "/developers"],
+            ["Documentation", "/docs"],
             ["Community", "/community"],
             ["About", "/about"],
             ["Resources", "/resources"],
@@ -168,12 +192,31 @@ function Header() {
               <ArrowUpRight size={18} />
             </button>
           ))}
-          {!results.length && (
+          {!!docResults.length && <LabelSmall>DOCUMENTATION</LabelSmall>}
+          {docResults.map((record) => (
+            <button
+              key={record.id}
+              onClick={() => {
+                navigate(docSearchURL(record, q));
+                setQ("");
+              }}
+            >
+              <span>
+                {record.title}
+                <small>
+                  {kinds[record.kind]} · {versionLabel(record.version)}
+                </small>
+              </span>
+              <ArrowUpRight size={18} />
+            </button>
+          ))}
+          {!results.length && !docResults.length && (
             <p>No results. Try “routing”, “TLS”, or “release”.</p>
           )}
         </div>
         <div className="search-dialog-bottom">
-          {content.length} pages & articles connected<span>ESC TO CLOSE</span>
+          {(content.length + docs.length).toLocaleString()} pages & documents
+          connected<span>ESC TO CLOSE</span>
         </div>
       </dialog>
     </>
@@ -277,20 +320,41 @@ export default function App() {
       <Header />
       <PageEffects />
       <main id="main">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/platform" element={<Platform />} />
-          <Route path="/developers" element={<Developers />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/download" element={<Download />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/news" element={<News />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/content/:slug" element={<ContentPage />} />
-          <Route path="/news/:slug" element={<ContentPage />} />
-          <Route path="/w/*" element={<ContentPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense
+          fallback={
+            <div className="section" role="status">
+              Connecting to the knowledge network…
+            </div>
+          }
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/docs" element={<DocsHome />} />
+            <Route path="/docs/modules" element={<DocsLibrary modules />} />
+            <Route
+              path="/docs/modules/:version"
+              element={<DocsLibrary modules />}
+            />
+            <Route
+              path="/docs/collections/:collection"
+              element={<DocsLibrary />}
+            />
+            <Route path="/docs/presentations" element={<DocsPresentations />} />
+            <Route path="/docs/sources" element={<DocsSources />} />
+            <Route path="/docs/*" element={<DocReader />} />
+            <Route path="/platform" element={<Platform />} />
+            <Route path="/developers" element={<Developers />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/download" element={<Download />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/content/:slug" element={<ContentPage />} />
+            <Route path="/news/:slug" element={<ContentPage />} />
+            <Route path="/w/*" element={<ContentPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
       <Footer />
     </>

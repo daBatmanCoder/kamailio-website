@@ -9,10 +9,16 @@
     "preview": "vite preview --host 127.0.0.1",
     "content:sync": "node scripts/sync-content.mjs",
     "content:check": "node scripts/verify-content.mjs",
-    "build:pages": "tsc -b && vite build --mode github-pages && node scripts/prepare-pages.mjs"
+    "build:pages": "tsc -b && vite build --mode github-pages && node scripts/prepare-pages.mjs",
+    "docs:fetch": "node scripts/fetch-documentation.mjs && node scripts/fetch-extra-documentation.mjs",
+    "docs:import": "node scripts/import-documentation.mjs",
+    "docs:sync": "npm run docs:fetch && npm run docs:import",
+    "docs:check": "node scripts/verify-documentation.mjs"
   },
   "dependencies": {
     "dompurify": "^3.2.7",
+    "fflate": "^0.8.3",
+    "highlight.js": "^11.12.0",
     "lucide-react": "^0.468.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -24,6 +30,8 @@
     "@types/react-dom": "^19.2.0",
     "@types/three": "^0.180.0",
     "@vitejs/plugin-react": "^5.0.4",
+    "cheerio": "^1.2.0",
+    "marked": "^18.1.1",
     "prettier": "^3.9.10",
     "typescript": "~5.9.3",
     "vite": "^7.1.9"

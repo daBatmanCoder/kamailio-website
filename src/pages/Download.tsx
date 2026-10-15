@@ -1,3 +1,4 @@
+import { siteHref } from "../lib/urls";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Label, Button } from "../components/UI";
@@ -18,7 +19,7 @@ const installs = [
     label: "LATEST STABLE BRANCH · 6.1",
     text: "Clone the stable branch and build locally. Development libraries and optional module dependencies must be installed for your system.",
     code: "git clone --branch 6.1 --single-branch \\\n  https://github.com/kamailio/kamailio.git\ncd kamailio\nmake cfg\nmake all\nsudo make install",
-    url: "https://www.kamailio.org/docs/tutorials/6.1.x/kamailio-install-guide-git/",
+    url: "/docs/tutorials/6.1.x/kamailio-install-guide-git",
   },
   {
     id: "debian",
@@ -26,7 +27,7 @@ const installs = [
     label: "APT PACKAGES",
     text: "Follow the official repository instructions for your OS release and the 6.1 branch, then install the packages you need. Run these commands after configuring that repository.",
     code: "sudo apt update\nsudo apt install kamailio",
-    url: "https://www.kamailio.org/wikidocs/packages/debs/",
+    url: "/docs/wiki/packages/debs",
   },
   {
     id: "rpm",
@@ -34,7 +35,7 @@ const installs = [
     label: "FEDORA / RHEL / OPENSUSE",
     text: "Select your distribution and the stable branch using the official RPM guide. With the repository configured, install Kamailio using your distribution’s package manager.",
     code: "# Fedora / RHEL with the Kamailio repository configured\nsudo dnf install kamailio",
-    url: "https://www.kamailio.org/wikidocs/packages/rpms/",
+    url: "/docs/wiki/packages/rpms",
   },
 ];
 export function Download() {
@@ -129,7 +130,7 @@ export function Download() {
               <Label>{install.label}</Label>
               <h3>{install.name}</h3>
               <p>{install.text}</p>
-              <a className="text-link" href={install.url}>
+              <a className="text-link" href={siteHref(install.url)}>
                 Full installation guide <ArrowUpRight size={16} />
               </a>
             </div>
@@ -154,7 +155,7 @@ export function Download() {
           </ResourceCard>
           <ResourceCard
             title="Upgrading to 6.1"
-            to="https://www.kamailio.org/wikidocs/install/upgrade/6.0.x-to-6.1.0/"
+            to="/docs/wiki/install/upgrade/6.0.x-to-6.1.0"
             icon={GitBranch}
           >
             Check configuration and database changes before migrating from an

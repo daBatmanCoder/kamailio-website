@@ -2,10 +2,11 @@ export const resourceGroups = [
   {
     title: "Build with Kamailio",
     items: [
-      ["Documentation", "/developers"],
-      ["Module reference", "https://www.kamailio.org/docs/modules/stable/"],
-      ["Development modules", "https://www.kamailio.org/docs/modules/devel/"],
-      ["Wiki & cookbooks", "https://www.kamailio.org/wikidocs/"],
+      ["Documentation", "/docs"],
+      ["Module reference", "/docs/modules/6.1.x"],
+      ["Development modules", "/docs/modules/devel"],
+      ["Wiki & cookbooks", "/docs/collections/wiki"],
+      ["Conference materials", "/docs/presentations"],
       ["Download & install", "/download"],
       ["Developer guide", "https://www.asipto.com/pub/kamailio-devel-guide/"],
     ],
@@ -53,8 +54,8 @@ export const resourceGroups = [
     items: [
       ["References", "/content/references"],
       ["Business information", "/content/business"],
-      ["Old wiki (≤ 5.5.x)", "https://www.kamailio.org/wiki/"],
-      ["Old wiki (≤ 3.1.x)", "https://www.kamailio.org/dokuwiki/"],
+      ["Old wiki (≤ 5.5.x)", "/docs/collections/wiki"],
+      ["Old wiki (≤ 3.1.x)", "/docs/collections/legacy"],
       ["SourceForge archive", "https://sourceforge.net/projects/openser/"],
       [
         "Code of conduct",

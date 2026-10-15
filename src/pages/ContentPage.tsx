@@ -1,3 +1,7 @@
+import {
+  documentationLink,
+  loadDocumentationRoutes,
+} from "../lib/documentation";
 import { siteHref } from "../lib/urls";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -34,7 +38,10 @@ export function ContentPage() {
         if (!r.ok) throw new Error("Content unavailable");
         return r.json();
       })
-      .then((data) => {
+      .then(async (data) => {
+        const docRoutes = await loadDocumentationRoutes().catch(
+          () => new Set<string>(),
+        );
         const doc = new DOMParser().parseFromString(
           DOMPurify.sanitize(data.html, {
             FORBID_TAGS: [
@@ -67,7 +74,21 @@ export function ContentPage() {
                   `${target.type === "post" ? "/news/" : "/content/"}${target.slug}${url.hash}`,
                 ),
               );
-            else a.setAttribute("href", url.href);
+            else {
+              const docTarget = documentationLink(url.href);
+              const local =
+                docRoutes.has(docTarget.split("#")[0]) ||
+                [
+                  "/docs",
+                  "/docs/modules",
+                  "/docs/modules/6.1.x",
+                  "/docs/modules/devel",
+                  "/docs/collections/wiki",
+                  "/docs/collections/legacy",
+                  "/docs/presentations",
+                ].includes(docTarget);
+              a.setAttribute("href", local ? siteHref(docTarget) : url.href);
+            }
           } catch {
             /* sanitizer removes unsafe protocols */
           }

@@ -32,6 +32,8 @@ jobs:
         run: npm ci
       - name: Verify imported content
         run: npm run content:check
+      - name: Verify documentation corpus
+        run: npm run docs:check
       - name: Build for the repository URL
         run: npm run build:pages
       - name: Configure GitHub Pages

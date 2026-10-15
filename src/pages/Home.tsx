@@ -318,7 +318,7 @@ export default function Home() {
             you want.
           </p>
           <div className="developer-links">
-            <Link to="/developers">
+            <Link to="/docs">
               <Terminal size={18} />
               Read the documentation
               <ArrowUpRight size={17} />

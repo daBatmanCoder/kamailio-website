@@ -15,16 +15,61 @@ const routes = new Set([
   "news",
   "resources",
 ]);
+const documentation = JSON.parse(
+  await readFile("public/documentation/catalog.json", "utf8"),
+);
+for (const route of [
+  "docs",
+  "docs/modules",
+  "docs/modules/stable",
+  "docs/sources",
+  "docs/presentations",
+  ...["wiki", "tutorial", "reference", "database", "legacy", "events"].map(
+    (kind) => "docs/collections/" + kind,
+  ),
+])
+  routes.add(route);
+for (const record of documentation) {
+  routes.add("docs/" + record.id);
+  if (record.kind === "module") routes.add("docs/modules/" + record.version);
+}
 for (const record of content) {
   routes.add(`${record.type === "post" ? "news" : "content"}/${record.slug}`);
   routes.add(new URL(record.url).pathname.replace(/^\/+|\/+$/g, ""));
 }
+const metadata = new Map(
+  documentation.map((record) => [
+    "docs/" + record.id,
+    {
+      title: `${record.title} — ${record.version} — Kamailio Docs`,
+      description: record.description,
+    },
+  ]),
+);
+const escape = (value) =>
+  String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 for (const route of routes) {
   const target = resolve(dist, route, "index.html");
   if (!target.startsWith(dist + sep))
     throw new Error(`Invalid route: ${route}`);
   await mkdir(dirname(target), { recursive: true });
-  await writeFile(target, template);
+  const meta = metadata.get(route);
+  const page = meta
+    ? template
+        .replace(
+          /<title>[\s\S]*?<\/title>/,
+          `<title>${escape(meta.title)}</title>`,
+        )
+        .replace(
+          /<meta\s+name="description"\s+content="[^"]*"\s*\/>/,
+          `<meta name="description" content="${escape(meta.description)}" />`,
+        )
+    : template;
+  await writeFile(target, page);
 }
 await writeFile(resolve(dist, "404.html"), template);
 await writeFile(resolve(dist, ".nojekyll"), "");
