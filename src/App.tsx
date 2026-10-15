@@ -1,3 +1,4 @@
+import { siteHref } from "./lib/urls";
 import { useEffect, useRef, useState } from "react";
 import {
   Link,
@@ -205,7 +206,7 @@ function Footer() {
           <div className="footer-column" key={g.title}>
             <h3>{g.title}</h3>
             {g.items.slice(0, 5).map(([t, u]) => (
-              <a href={u} key={t}>
+              <a href={siteHref(u)} key={t}>
                 {t}
               </a>
             ))}

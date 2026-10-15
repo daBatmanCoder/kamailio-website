@@ -19,4 +19,11 @@ Completed 15 October 2026.
 
 ## Boundaries
 
-External module documentation, wikis, download archives, mailing systems, and conference sites remain official outbound destinations. Historic linked assets may depend on their original hosts. Every record was checked for integrity; every article was not manually read or visually reviewed. The globe and topology are illustrations, not live infrastructure measurements. No public deployment was performed.
+External module documentation, wikis, download archives, mailing systems, and conference sites remain official outbound destinations. Historic linked assets may depend on their original hosts. Every record was checked for integrity; every article was not manually read or visually reviewed. The globe and topology are illustrations, not live infrastructure measurements.
+
+## GitHub Pages configuration
+
+- Repository base path `/kamailio-website/` applied to built assets, font URLs, BrowserRouter, content fetching, and document links.
+- The Pages build generates 1,699 route entry documents plus a 404 fallback.
+- Local Pages-mode browser verification: homepage navigation resolves under the repository path; management content loads; imported profile links retain the base path; no console errors or warnings observed.
+- GitHub Actions workflow checks the content corpus, builds, uploads the artifact, and deploys on pushes to main.

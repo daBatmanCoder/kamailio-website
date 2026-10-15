@@ -1,3 +1,4 @@
+import { siteHref } from "../lib/urls";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Label, SectionTitle, clean } from "../components/UI";
@@ -31,7 +32,7 @@ export function Resources() {
           <div key={g.title}>
             <Label>{g.title}</Label>
             {g.items.map(([t, u]) => (
-              <a href={u} key={t}>
+              <a href={siteHref(u)} key={t}>
                 {t}
                 <ArrowUpRight size={16} />
               </a>

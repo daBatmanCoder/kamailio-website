@@ -1,3 +1,4 @@
+import { siteHref } from "../lib/urls";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
@@ -28,7 +29,7 @@ export function ContentPage() {
     setFailed(false);
     if (!page) return;
     const abort = new AbortController();
-    fetch(`/content/${page.id}.json`, { signal: abort.signal })
+    fetch(siteHref(`/content/${page.id}.json`), { signal: abort.signal })
       .then((r) => {
         if (!r.ok) throw new Error("Content unavailable");
         return r.json();
@@ -62,7 +63,9 @@ export function ContentPage() {
             if (target)
               a.setAttribute(
                 "href",
-                `${target.type === "post" ? "/news/" : "/content/"}${target.slug}${url.hash}`,
+                siteHref(
+                  `${target.type === "post" ? "/news/" : "/content/"}${target.slug}${url.hash}`,
+                ),
               );
             else a.setAttribute("href", url.href);
           } catch {

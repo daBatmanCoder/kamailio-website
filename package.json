@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "content:sync": "node scripts/sync-content.mjs",
-    "content:check": "node scripts/verify-content.mjs"
+    "content:check": "node scripts/verify-content.mjs",
+    "build:pages": "tsc -b && vite build --mode github-pages && node scripts/prepare-pages.mjs"
   },
   "dependencies": {
     "dompurify": "^3.2.7",

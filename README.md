@@ -19,6 +19,19 @@ npm run preview
 
 Deploy the generated `dist/` folder to any static host. Configure a fallback to `index.html` for client-side routes. `public/_redirects` includes a Netlify-compatible fallback. The Vite preview server also supports these routes.
 
+## GitHub Pages
+
+Live URL: https://dabatmancoder.github.io/kamailio-website/
+
+Pushes to `main` run `.github/workflows/pages.yml`: install locked dependencies, verify the content corpus, build with the repository base path, and deploy to GitHub Pages. The workflow can also be started manually from Actions.
+
+```sh
+npm run build:pages
+npm run preview -- --mode github-pages
+```
+
+The Pages build uses `/kamailio-website/` for assets, routing, content fetches, and document links. It creates physical HTML entry documents for every known project and legacy route, so direct links and refreshes work on GitHub Pages. `npm run dev` and the regular `npm run build` still target the domain root.
+
 ## Content
 
 Imported on 15 October 2026 from Kamailio’s public WordPress REST API:

@@ -1,5 +1,12 @@
+import { siteHref } from "../lib/urls";
 import { SectionTitle } from "../components/UI";
-import { Terminal, Code2, GitBranch, MessageCircle, ArrowUpRight } from "lucide-react";
+import {
+  Terminal,
+  Code2,
+  GitBranch,
+  MessageCircle,
+  ArrowUpRight,
+} from "lucide-react";
 import { PageHero, ResourceCard } from "../components/ExploreUI";
 
 export function Developers() {
@@ -76,7 +83,7 @@ export function Developers() {
               "https://github.com/kamailio/kamailio",
             ],
           ].map(([n, t, d, u]) => (
-            <a key={n} href={u} className="link-row">
+            <a key={n} href={siteHref(u)} className="link-row">
               <span>{n}</span>
               <h3>{t}</h3>
               <p>{d}</p>
